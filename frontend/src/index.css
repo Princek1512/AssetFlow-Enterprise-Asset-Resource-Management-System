@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Global monochrome guardrails. Everything renders in black/white/gray —
+  no exceptions, including native form controls and focus rings.
+*/
+body {
+  @apply bg-white text-black antialiased;
+}
+
+*:focus-visible {
+  outline: 2px solid black;
+  outline-offset: 2px;
+}
+
+::selection {
+  @apply bg-black text-white;
+}
