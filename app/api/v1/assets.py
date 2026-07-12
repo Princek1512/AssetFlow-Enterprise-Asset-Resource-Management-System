@@ -11,18 +11,26 @@ from app.core.deps import get_current_user, require_role
 from app.core.state_machine import InvalidTransitionError
 from app.models.asset import Asset, asset_tag_sequence
 from app.models.asset_category import AssetCategory
+<<<<<<< HEAD
 from app.models.enums import AssetStatusEnum, RoleEnum, TransferRequestStatusEnum
 from app.models.transfer_request import TransferRequest
 from app.models.user import User
 from app.schemas.asset import (
     AssetAllocateRequest,
+=======
+from app.models.enums import AssetStatusEnum, RoleEnum
+from app.schemas.asset import (
+>>>>>>> 0b21ee9da9c9fae9a687d8d219bb9ee4966c31b9
     AssetCreate,
     AssetListOut,
     AssetOut,
     AssetStatusTransitionRequest,
     AssetUpdate,
 )
+<<<<<<< HEAD
 from app.schemas.transfer_request import TransferRequestCreate, TransferRequestOut
+=======
+>>>>>>> 0b21ee9da9c9fae9a687d8d219bb9ee4966c31b9
 from app.services.asset_lifecycle import asset_state_machine
 
 router = APIRouter(prefix="/assets", tags=["Assets"])
@@ -88,7 +96,11 @@ async def register_asset(payload: AssetCreate, db: AsyncSession = Depends(get_db
 @router.get("", response_model=AssetListOut)
 async def list_assets(
     db: AsyncSession = Depends(get_db),
+<<<<<<< HEAD
     current_user: User = Depends(get_current_user),
+=======
+    _current_user=Depends(get_current_user),
+>>>>>>> 0b21ee9da9c9fae9a687d8d219bb9ee4966c31b9
     status_filter: AssetStatusEnum | None = Query(default=None, alias="status"),
     category_id: uuid.UUID | None = Query(default=None),
     is_bookable: bool | None = Query(default=None),
@@ -98,7 +110,11 @@ async def list_assets(
     skip: int = Query(default=0, ge=0),
     limit: int = Query(default=50, ge=1, le=200),
 ) -> AssetListOut:
+<<<<<<< HEAD
     """Asset directory — filtered by role."""
+=======
+    """Asset directory — every authenticated role can browse it, filters are all optional."""
+>>>>>>> 0b21ee9da9c9fae9a687d8d219bb9ee4966c31b9
     filters = []
     if status_filter is not None:
         filters.append(Asset.status == status_filter)
@@ -116,6 +132,7 @@ async def list_assets(
 
     count_stmt = select(func.count()).select_from(Asset)
     list_stmt = select(Asset).options(selectinload(Asset.category))
+<<<<<<< HEAD
 
     if current_user.role == RoleEnum.EMPLOYEE:
         filters.append((Asset.current_holder_id == current_user.id) | (Asset.is_bookable == True))
@@ -124,6 +141,8 @@ async def list_assets(
         list_stmt = list_stmt.outerjoin(User, Asset.current_holder_id == User.id)
         filters.append((User.department_id == current_user.department_id) | (Asset.is_bookable == True))
 
+=======
+>>>>>>> 0b21ee9da9c9fae9a687d8d219bb9ee4966c31b9
     for condition in filters:
         count_stmt = count_stmt.where(condition)
         list_stmt = list_stmt.where(condition)
@@ -140,6 +159,7 @@ async def list_assets(
 async def get_asset(
     asset_id: uuid.UUID,
     db: AsyncSession = Depends(get_db),
+<<<<<<< HEAD
     current_user: User = Depends(get_current_user),
 ) -> Asset:
     stmt = select(Asset).options(selectinload(Asset.category)).where(Asset.id == asset_id)
@@ -150,6 +170,13 @@ async def get_asset(
             (User.department_id == current_user.department_id) | (Asset.is_bookable == True)
         )
     result = await db.execute(stmt)
+=======
+    _current_user=Depends(get_current_user),
+) -> Asset:
+    result = await db.execute(
+        select(Asset).options(selectinload(Asset.category)).where(Asset.id == asset_id)
+    )
+>>>>>>> 0b21ee9da9c9fae9a687d8d219bb9ee4966c31b9
     asset = result.scalar_one_or_none()
     if asset is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Asset not found.")
@@ -243,6 +270,7 @@ async def transition_asset_status(
 
     await db.refresh(asset, attribute_names=["category"])
     return asset
+<<<<<<< HEAD
 
 
 
@@ -445,3 +473,5 @@ async def request_asset_transfer(
         transfer_request, attribute_names=["asset", "requested_by", "current_holder"]
     )
     return transfer_request
+=======
+>>>>>>> 0b21ee9da9c9fae9a687d8d219bb9ee4966c31b9

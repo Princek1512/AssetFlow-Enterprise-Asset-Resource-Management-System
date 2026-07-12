@@ -7,11 +7,19 @@ from fastapi.responses import JSONResponse
 from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
 
+<<<<<<< HEAD
 from app.api.v1 import admin, asset_categories, assets, auth, bookings, dashboard, maintenance, transfer_requests, audit
 from app.core.config import settings
 from app.core.database import AsyncSessionLocal, Base, engine
 from app.core.security import hash_password
 from app.models import User, AuditCycle, AuditRecord  # noqa: F401  (import ensures all models are registered on Base.metadata)
+=======
+from app.api.v1 import admin, asset_categories, assets, auth
+from app.core.config import settings
+from app.core.database import AsyncSessionLocal, Base, engine
+from app.core.security import hash_password
+from app.models import User  # noqa: F401  (import ensures all models are registered on Base.metadata)
+>>>>>>> 0b21ee9da9c9fae9a687d8d219bb9ee4966c31b9
 from app.models.enums import RoleEnum
 
 logger = logging.getLogger("assetflow")
@@ -62,6 +70,7 @@ async def lifespan(app: FastAPI):
     await _bootstrap_first_admin()
     yield
     await engine.dispose()
+<<<<<<< HEAD
 app = FastAPI(title="AssetFlow", lifespan=lifespan)
 
 # Add your React frontend URL here
@@ -73,6 +82,20 @@ origins = [
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
+=======
+
+
+app = FastAPI(
+    title=settings.PROJECT_NAME,
+    description="Enterprise Asset & Resource Management System API",
+    version="0.2.0",
+    lifespan=lifespan,
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # tighten before production deployment
+>>>>>>> 0b21ee9da9c9fae9a687d8d219bb9ee4966c31b9
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -97,8 +120,11 @@ app.include_router(auth.router, prefix=settings.API_V1_PREFIX)
 app.include_router(admin.router, prefix=settings.API_V1_PREFIX)
 app.include_router(asset_categories.router, prefix=settings.API_V1_PREFIX)
 app.include_router(assets.router, prefix=settings.API_V1_PREFIX)
+<<<<<<< HEAD
 app.include_router(transfer_requests.router, prefix=settings.API_V1_PREFIX)
 app.include_router(bookings.router, prefix=settings.API_V1_PREFIX)
 app.include_router(maintenance.router, prefix=settings.API_V1_PREFIX)
 app.include_router(dashboard.router, prefix=settings.API_V1_PREFIX)
 app.include_router(audit.router, prefix=settings.API_V1_PREFIX)
+=======
+>>>>>>> 0b21ee9da9c9fae9a687d8d219bb9ee4966c31b9

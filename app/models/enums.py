@@ -48,6 +48,7 @@ class MaintenancePriorityEnum(str, enum.Enum):
 class MaintenanceStatusEnum(str, enum.Enum):
     PENDING = "pending"
     APPROVED = "approved"
+<<<<<<< HEAD
     TECHNICIAN_ASSIGNED = "technician_assigned"
     IN_PROGRESS = "in_progress"
     RESOLVED = "resolved"
@@ -57,4 +58,14 @@ class TransferRequestStatusEnum(str, enum.Enum):
     REQUESTED = "requested"
     APPROVED = "approved"
     RE_ALLOCATED = "re_allocated"
+=======
+    IN_PROGRESS = "in_progress"
+    COMPLETED = "completed"
+    REJECTED = "rejected"
+
+
+class TransferRequestStatusEnum(str, enum.Enum):
+    PENDING = "pending"
+    APPROVED = "approved"
+>>>>>>> 0b21ee9da9c9fae9a687d8d219bb9ee4966c31b9
     REJECTED = "rejected"

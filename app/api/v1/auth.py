@@ -11,6 +11,7 @@ from app.models.enums import RoleEnum
 from app.models.user import User
 from app.schemas.auth import SignupRequest, TokenResponse, UserOut
 
+<<<<<<< HEAD
 from pydantic import BaseModel
 from google.oauth2 import id_token
 from google.auth.transport import requests
@@ -21,6 +22,10 @@ class GoogleLoginRequest(BaseModel):
     token: str
 
 
+=======
+router = APIRouter(prefix="/auth", tags=["Authentication"])
+
+>>>>>>> 0b21ee9da9c9fae9a687d8d219bb9ee4966c31b9
 
 @router.post("/signup", response_model=UserOut, status_code=status.HTTP_201_CREATED)
 async def signup(payload: SignupRequest, db: AsyncSession = Depends(get_db)) -> User:
@@ -98,6 +103,7 @@ async def login(
 @router.get("/me", response_model=UserOut)
 async def read_current_user(current_user: User = Depends(get_current_user)) -> User:
     return current_user
+<<<<<<< HEAD
 
 
 @router.post("/google-login", response_model=TokenResponse)
@@ -138,3 +144,5 @@ async def google_login(payload: GoogleLoginRequest, db: AsyncSession = Depends(g
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid Google Token",
         )
+=======
+>>>>>>> 0b21ee9da9c9fae9a687d8d219bb9ee4966c31b9

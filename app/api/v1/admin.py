@@ -13,16 +13,28 @@ from app.schemas.auth import PromoteUserRequest, UserOut
 router = APIRouter(
     prefix="/admin",
     tags=["Admin - Organization Management"],
+<<<<<<< HEAD
 )
 
 
 @router.get("/users", response_model=list[UserOut], dependencies=[Depends(require_role(RoleEnum.ADMIN, RoleEnum.ASSET_MANAGER, RoleEnum.DEPARTMENT_HEAD))])
+=======
+    dependencies=[Depends(require_role(RoleEnum.ADMIN))],
+)
+
+
+@router.get("/users", response_model=list[UserOut])
+>>>>>>> 0b21ee9da9c9fae9a687d8d219bb9ee4966c31b9
 async def list_users(db: AsyncSession = Depends(get_db)) -> list[User]:
     result = await db.execute(select(User).order_by(User.created_at.desc()))
     return list(result.scalars().all())
 
 
+<<<<<<< HEAD
 @router.post("/users/{user_id}/promote", response_model=UserOut, dependencies=[Depends(require_role(RoleEnum.ADMIN))])
+=======
+@router.post("/users/{user_id}/promote", response_model=UserOut)
+>>>>>>> 0b21ee9da9c9fae9a687d8d219bb9ee4966c31b9
 async def promote_user(
     user_id: uuid.UUID,
     payload: PromoteUserRequest,
@@ -68,7 +80,11 @@ async def promote_user(
     return target_user
 
 
+<<<<<<< HEAD
 @router.patch("/users/{user_id}/deactivate", response_model=UserOut, dependencies=[Depends(require_role(RoleEnum.ADMIN))])
+=======
+@router.patch("/users/{user_id}/deactivate", response_model=UserOut)
+>>>>>>> 0b21ee9da9c9fae9a687d8d219bb9ee4966c31b9
 async def deactivate_user(
     user_id: uuid.UUID,
     db: AsyncSession = Depends(get_db),

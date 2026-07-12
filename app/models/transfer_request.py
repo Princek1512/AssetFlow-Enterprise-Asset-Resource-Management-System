@@ -40,7 +40,11 @@ class TransferRequest(Base):
     reason: Mapped[str | None] = mapped_column(Text, nullable=True)
 
     status: Mapped[TransferRequestStatusEnum] = mapped_column(
+<<<<<<< HEAD
         transfer_status_pg_enum, nullable=False, default=TransferRequestStatusEnum.REQUESTED
+=======
+        transfer_status_pg_enum, nullable=False, default=TransferRequestStatusEnum.PENDING
+>>>>>>> 0b21ee9da9c9fae9a687d8d219bb9ee4966c31b9
     )
 
     created_at: Mapped[datetime] = mapped_column(

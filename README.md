@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # AssetFlow — Phase 1 + Phase 2 + Phase 3 + Phase 4
+=======
+# AssetFlow — Phase 1 + Phase 2
+>>>>>>> 0b21ee9da9c9fae9a687d8d219bb9ee4966c31b9
 
 ## Stack
 - **FastAPI** (async) — rapid API generation, auto-generated OpenAPI docs at `/docs`
@@ -81,6 +85,7 @@ disposed           -> (terminal — no further transitions)
   then validates the move against the state machine above before committing. Illegal
   transitions return `409` with the allowed next states in the error detail.
 
+<<<<<<< HEAD
 ## What's implemented in Phase 3
 
 ### Direct allocation — double-allocation prevention (`app/api/v1/assets.py`)
@@ -125,6 +130,8 @@ disposed           -> (terminal — no further transitions)
   in Phase 2 (`app/services/booking_lifecycle.py`) — `completed`/`cancelled` are
   terminal, so a stale cancel attempt returns `409` instead of corrupting state.
 
+=======
+>>>>>>> 0b21ee9da9c9fae9a687d8d219bb9ee4966c31b9
 ## Running locally
 
 ```bash
@@ -206,6 +213,7 @@ curl -X POST http://localhost:8000/api/v1/assets/{asset_id}/status \
 ```
 
 ## What's next
+<<<<<<< HEAD
 - **Phase 4** — Maintenance request routing (approval flips status to `under_maintenance`
   via the asset state machine, using the same `StateMachine` primitive as bookings) +
   dashboard KPI aggregations (utilization rates, overdue maintenance, booking load per
@@ -282,3 +290,11 @@ row-locking conventions rather than introducing new patterns.
 
 Both routers are wired into `app/main.py`, and the app version has been bumped to
 `0.4.0`.
+=======
+- **Phase 3** — Allocation double-booking lock (`SELECT ... FOR UPDATE` on `current_holder_id`)
+  + Booking time-slot overlap validation for shared/bookable resources.
+- **Phase 4** — Maintenance request routing (approval flips status to `under_maintenance`
+  via the state machine above) + Transfer Request workflow + dashboard KPI aggregations.
+
+Reply **"proceed to Phase 3"** when ready.
+>>>>>>> 0b21ee9da9c9fae9a687d8d219bb9ee4966c31b9

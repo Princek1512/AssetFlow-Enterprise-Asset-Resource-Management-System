@@ -73,6 +73,7 @@ class AssetStatusTransitionRequest(BaseModel):
         max_length=500,
         description="Optional note on why the status is changing (audit/logging use in later phases).",
     )
+<<<<<<< HEAD
 
 
 class AssetAllocateRequest(BaseModel):
@@ -80,3 +81,5 @@ class AssetAllocateRequest(BaseModel):
 
     employee_id: uuid.UUID
     note: str | None = Field(default=None, max_length=500)
+=======
+>>>>>>> 0b21ee9da9c9fae9a687d8d219bb9ee4966c31b9
